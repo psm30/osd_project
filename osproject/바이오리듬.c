@@ -1,3 +1,8 @@
+/*
+  바이오리듬 계산기(Biorhythm calculator)
+  2020037030 박소민
+*/
+
 #include <stdio.h>
 #include <math.h>
 
@@ -7,15 +12,13 @@ long total_days(int year, int month, int day);    //살아온 날 수 계산 함수
 void print_biorhythm(long total, int month);    //바이오리듬 계산 결과 출력 함수
 char bio_status(int val, int mod);    //바이오리듬 상태 판단 함수
 
-
 int main(void)
-
 {
 	int byr, bmon, bday;    //생년월일 저장 변수
 	int tyr, tmon, tday;    //계산할 날짜 저장 변수
 	long total = 0;    //생년월일과 계산할 날짜 사이의 일수
 
-	printf("*****특정월의 바이오리듬 계산*****\n");
+	printf("*****특정 월의 바이오리듬 계산*****\n");
 	printf("\n");
 	printf("생년 월일을 입력하세요 (ex: 2000 01 01): ");
 	scanf("%d%d%d", &byr, &bmon, &bday);    //입력한 생년월일 저장
@@ -26,8 +29,8 @@ int main(void)
 	total = total_days(tyr, tmon, tday) - total_days(byr, bmon, bday);    //생년월일과 입력한 년월의 날짜수 계산
 	printf("두 날짜 사이의 날짜수는 %ld일 입니다. \n\n", total);    //두 날짜 사이 날짜수 출력
 
-	printf("[바이오리듬 결과]\n");
-	print_biorhythm(total, tmon);    //바이오 리듬 결과  출력
+	printf("[바이오리듬 결과]\n\n");
+	print_biorhythm(total, tmon);    //바이오 리듬 결과 출력 함수 호출
 	return 0;
 }
 
@@ -37,7 +40,6 @@ int main(void)
 
 */
 long total_days(int year, int month, int day)
-
 {
 	int months[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };    //1~12월 날짜 수
 	int i;
@@ -83,25 +85,25 @@ void print_biorhythm(long total, int month)
 	int dayend = 0;
 	int physical, emotion, intellect;    //신체, 감정, 지능
 	int p_high[31] = { 0 }, p_danger[31] = { 0 }, p_low[31] = { 0 };    //신체 고조, 위험, 저조일 배열
-	int e_high[31] = { 0 }, e_danger[31] = { 0 }, e_low[31] = { 0 };    //감정 고조, 위험 저조일 배열
-	int i_high[31] = { 0 }, i_danger[31] = { 0 }, i_low[31] = { 0 };    //지능 고조, 위험 저조일 배열
+	int e_high[31] = { 0 }, e_danger[31] = { 0 }, e_low[31] = { 0 };    //감정 고조, 위험, 저조일 배열
+	int i_high[31] = { 0 }, i_danger[31] = { 0 }, i_low[31] = { 0 };    //지능 고조, 위험, 저조일 배열
 	int p_idx1 = 0, p_idx2 = 0, p_idx3 = 0;    //신체 배열의 인덱스
 	int e_idx1 = 0, e_idx2 = 0, e_idx3 = 0;    //감정 배열의 인덱스
-	int i_idx1 = 0, i_idx2 = 0, i_idx3 = 0;    //진능 배열의 인덱스
+	int i_idx1 = 0, i_idx2 = 0, i_idx3 = 0;    //지능 배열의 인덱스
 
 
 	//월 별 일 수 저장
 	if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
 	{
-		dayend = 31;
+		dayend = 31;    //마지막 날은 31일
 	}
 	else if (month == 2)
 	{
-		dayend = 28;
+		dayend = 28;    //마지막 날은 28일
 	}
 	else if (month == 4 || month == 6 || month == 11)
 	{
-		dayend = 30;
+		dayend = 30;    //마지막 날은 30일
 	}
 
 
@@ -130,13 +132,13 @@ void print_biorhythm(long total, int month)
 		switch (result2)
 		{
 		case '-':    //저조기
-			e_low[e_idx1++] = dayindex;    //e_low[p_idx1]에 dqyindex를 저장하고 e_idx1 값을 1 증가
+			e_low[e_idx1++] = dayindex;    //e_low[e_idx1]에 dqyindex를 저장하고 e_idx1 값을 1 증가
 			break;
 		case 'D':    //위험기
-			e_danger[e_idx2++] = dayindex;    //e_danger[p_idx2]에 dqyindex를 저장하고 e_idx2 값을 1 증가
+			e_danger[e_idx2++] = dayindex;    //e_danger[e_idx2]에 dqyindex를 저장하고 e_idx2 값을 1 증가
 			break;
 		case '+':    //고조기
-			e_high[e_idx3++] = dayindex;    //e_high[p_idx3]에 dayindex을 저장하고 e_idx3 값을 1 증가
+			e_high[e_idx3++] = dayindex;    //e_high[e_idx3]에 dayindex을 저장하고 e_idx3 값을 1 증가
 			break;
 		}
 
@@ -144,23 +146,27 @@ void print_biorhythm(long total, int month)
 		switch (result3)
 		{
 		case '-':    //저조기
-			i_low[i_idx1++] = dayindex;    //i_low[p_idx1]에 dqyindex를 저장하고 i_idx1 값을 1 증가
+			i_low[i_idx1++] = dayindex;    //i_low[i_idx1]에 dqyindex를 저장하고 i_idx1 값을 1 증가
 			break;
 		case 'D':    //위험기
-			i_danger[i_idx2++] = dayindex;    //i_danger[p_idx2]에 dqyindex를 저장하고 i_idx2 값을 1 증가
+			i_danger[i_idx2++] = dayindex;    //i_danger[i_idx2]에 dqyindex를 저장하고 i_idx2 값을 1 증가
 			break;
 		case '+':    //고조기   
-			i_high[i_idx3++] = dayindex;    //i_high[p_idx3]에 dayindex을 저장하고 i_idx3 값을 1 증가
+			i_high[i_idx3++] = dayindex;    //i_high[i_idx3]에 dayindex을 저장하고 i_idx3 값을 1 증가
 			break;
 		}
 		total++;    //total 1 증가
 	}
 
-	//신체
-	printf("%10s\t", "신체 ");
-	//신체의 고조기 출력
-	int index = 0;
+
+	/*
+	신체
+	*/
+	printf("%10s\t", "<신체>");
+
+	//신체의 고조일 출력
 	printf("고조일: ");
+	int index = 0;
 	while (1)    //무한 루프
 	{
 		int cnt = 0;
@@ -172,11 +178,11 @@ void print_biorhythm(long total, int month)
 		if (!p_high[++index])    //배열 p_high에 저장된 원소 값이 0일 경우 break
 			break;
 		else
-			printf(" ");
+			printf(",  ");
 	}
+	printf("\n");
 
-
-	//신체의 위험기 출력
+	//신체의 위험일 출력
 	index = 0;
 	printf("\t\t");
 	printf("위험일: ");
@@ -187,40 +193,46 @@ void print_biorhythm(long total, int month)
 		while (p_danger[index] + 1 == p_danger[index + 1])    //배열의 다음 인덱스 값이 다음 날짜 일 경우 반복
 			index++, cnt++;    //index와 cnt 1씩 증가
 		if (cnt > 0)    //cnt > 0 일경우 날짜 이어서 출력
-			printf("~%d", p_danger[index]);
-		if (!p_danger[++index])    //배열 p_danger에 저장된 원소 값이 0일 경우 break
+			printf("~%d", p_danger[index]);  
+		if (!p_danger[++index])     //배열 p_high에 저장된 원소 값이 0일 경우 break
 			break;
 		else
-			printf(" ");
+			printf(", ");
 	}
+	printf("\n");
 
-	//신체의 저조기 출력
+	//신체의 저조일 출력
 	index = 0;
 	printf("\t\t");
-	printf("저조일: ");
+	printf("저조일: ");    
 	while (1)
 	{
 		int cnt = 0;
 		printf("%d", p_low[index]);    //저조일에 해당되는 날짜 출력
-		while (p_low[index] + 1 == p_low[index + 1])    //배열의 다음 인덱스 값이 다음 날짜 일 경우 반복
+		while (p_low[index] + 1 == p_low[index + 1])    //배열의 인덱스 값이다음 날짜 일 경우 반복
 			index++, cnt++;    //index와 cnt 1씩 증가
-		if (cnt > 0)    //cnt > 0 일경우 날짜 이어서 출력
-			printf("~%d", p_low[index]);
-		if (!p_low[++index])    //배열 p_low에 저장된 원소 값이 0일 경우 break
+		if (cnt > 0)     //cnt > 0 일경우 날짜 이어서 출력
+			printf("~%d", p_low[index]);   
+		if (!p_low[++index])    //배열 p_high에 저장된 원소 값이 0일 경우 break
 			break;
 		else
-			printf(" ");
+			printf(", ");
 	}
+	printf("\n");
 
-	//감정
-	printf("\n%10s\t", "감정 ");
-	//감정 고조기 출력
-	index = 0;
+
+	/*
+	감정
+	*/
+	printf("\n%10s\t", "<감정>");
+
+	//감정 고조일 출력
 	printf("고조일: ");
+	index = 0;
 	while (1)
 	{
 		int cnt = 0;
-		printf("%3d", e_high[index]);
+		printf("%d", e_high[index]);
 		while (e_high[index] + 1 == e_high[index + 1])
 			index++, cnt++;
 		if (cnt > 0)
@@ -228,17 +240,18 @@ void print_biorhythm(long total, int month)
 		if (!e_high[++index])
 			break;
 		else
-			printf(" ");
+			printf(", ");
 	}
-
-	//감정 위험기 출력
+	printf("\n");
+	
+	//감정 위험일 출력
 	index = 0;
 	printf("\t\t");
 	printf("위험일: ");
 	while (1)
 	{
 		int cnt = 0;
-		printf("%3d", e_danger[index]);
+		printf("%d", e_danger[index]);
 		while (e_danger[index] + 1 == e_danger[index + 1])
 			index++, cnt++;
 		if (cnt > 0)
@@ -246,17 +259,18 @@ void print_biorhythm(long total, int month)
 		if (!e_danger[++index])
 			break;
 		else
-			printf(" ");
+			printf(", ");
 	}
+	printf("\n");
 
-	//감정 저조기 출력
+	//감정 저조일 출력
 	index = 0;
 	printf("\t\t");
 	printf("저조일: ");
 	while (1)
 	{
 		int cnt = 0;
-		printf("%3d", e_low[index]);
+		printf("%d", e_low[index]);
 		while (e_low[index] + 1 == e_low[index + 1])
 			index++, cnt++;
 		if (cnt > 0)
@@ -264,18 +278,23 @@ void print_biorhythm(long total, int month)
 		if (!e_low[++index])
 			break;
 		else
-			printf(" ");
+			printf(", ");
 	}
+	printf("\n");
 
-	//지능
-	printf("\n%10s\t", "지능");
-	//지능 고조기 출력
+
+	/*
+	지능
+	*/
+	printf("\n%10s\t", "<지능>");
+
+	//지능 고조일 출력
 	index = 0;
 	printf("고조일: ");
 	while (1)
 	{
 		int cnt = 0;
-		printf("%3d", i_high[index]);
+		printf("%d", i_high[index]);
 		while (i_high[index] + 1 == i_high[index + 1])
 			index++, cnt++;
 		if (cnt > 0)
@@ -283,18 +302,18 @@ void print_biorhythm(long total, int month)
 		if (!i_high[++index])
 			break;
 		else
-			printf(" ");
+			printf(", ");
 	}
+	printf("\n");
 
-	//지능 위험기 출력
+	//지능 위험일 출력
 	index = 0;
 	printf("\t\t");
 	printf("위험일: ");
 	while (1)
-
 	{
 		int cnt = 0;
-		printf("%3d", i_danger[index]);
+		printf("%d", i_danger[index]);
 		while (i_danger[index] + 1 == i_danger[index + 1])
 			index++, cnt++;
 		if (cnt > 0)
@@ -302,18 +321,19 @@ void print_biorhythm(long total, int month)
 		if (!i_danger[++index])
 			break;
 		else
-			printf(" ");
+			printf(", ");
 
 	}
+	printf("\n");
 
-	//지능 저조기 출력
-	index = 0; 
+	//지능 저조일 출력
+	index = 0;
 	printf("\t\t");
 	printf("저조일: ");
 	while (1)
 	{
 		int cnt = 0;
-		printf("%3d", i_low[index]);
+		printf("%d", i_low[index]);
 		while (i_low[index] + 1 == i_low[index + 1])
 			index++, cnt++;
 		if (cnt > 0)
@@ -321,7 +341,7 @@ void print_biorhythm(long total, int month)
 		if (!i_low[++index])
 			break;
 		else
-			printf(" ");
+			printf(", ");
 	}
 	printf("\n");
 }
