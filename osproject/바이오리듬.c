@@ -8,7 +8,7 @@
 
 #define PI 3.141592
 
-long total_days(int year, int month, int day);    //살아온 날 수 계산 함수
+long total_days(int year, int month, int day);    //기준일로 부터 특정일 사이 날짜수 계산 함수
 void print_biorhythm(long total, int month);    //바이오리듬 계산 결과 출력 함수
 char bio_status(int val, int mod);    //바이오리듬 상태 판단 함수
 
@@ -49,8 +49,8 @@ long total_days(int year, int month, int day)
 	//4로 나누어지는 횟수 - 100으로 나누어지는 횟수(평년) + 400으로 나누어지는 횟수 = 윤년 횟수
 	if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) //윤년일 때만 2월달 일 수 하루 추가
 		months[1]++;
-	for (i = 0; i < month - 1; i++)    //total에 month-1월 까지의 날짜수 더함
-		total += months[i];
+	for (i = 0; i < month - 1; i++)    
+		total += months[i];    //total에 month-1월 까지의 날짜수 더함
 	total += day;    //total에 남은 날짜수 더함
 	return total;    //계산한 날짜 수 반환
 }
